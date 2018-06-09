@@ -1,0 +1,14 @@
+﻿image: Visual Studio 2017
+configuration: Release
+skip_tags: true
+pull_requests:
+  do_not_increment_build_number: true  
+nuget:
+  account_feed: false
+  project_feed: false
+before_build:
+  - dotnet restore
+build:
+  publish_nuget: false
+  publish_nuget_symbols: false
+  verbosity: minimal
