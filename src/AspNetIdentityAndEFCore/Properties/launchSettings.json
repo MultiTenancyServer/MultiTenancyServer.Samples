@@ -18,7 +18,9 @@
     },
     "MultiTenancyServerWithAspNetIdentityAndEFCore": {
       "commandName": "Project",
+      "commandLineArgs": "/seed",
       "launchBrowser": true,
+      "launchUrl": "tenants/tenant1/Account/Login",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
