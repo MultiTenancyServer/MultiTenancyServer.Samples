@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data;
@@ -27,11 +23,25 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            // Add Multi-Tenancy services.
+            services.AddMultiTenancy<ApplicationTenant, string>()
+                .AddRequestParsers(parsers =>
+                {
+                    // To test a domain parser locally, add a similar line 
+                    // to your hosts file for each tenant you want to test
+                    // For Windows: C:\Windows\System32\drivers\etc\hosts
+                    // 127.0.0.1	tenant1.tenants.local
+                    //parsers.AddSubdomainParser(".tenants.local");
+
+                    parsers.AddChildPathParser("/tenants/");
+                })
+                .AddEntityFrameworkStore<ApplicationDbContext, ApplicationTenant, string>();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -57,11 +67,14 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
 
             app.UseAuthentication();
 
+            app.UseMultiTenancy<ApplicationTenant>();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    // if using a PathParser, you will need to adjust this to accomodate the tenant paths
+                    template: "tenants/{_tenant_placeholder_}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

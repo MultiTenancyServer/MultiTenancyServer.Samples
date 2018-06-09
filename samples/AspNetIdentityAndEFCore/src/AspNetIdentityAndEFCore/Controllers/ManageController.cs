@@ -17,7 +17,6 @@ using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Services;
 namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Controllers
 {
     [Authorize]
-    [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
