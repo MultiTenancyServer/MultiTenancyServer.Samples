@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetIdentityAndEFCore", "samples\AspNetIdentityAndEFCore\src\AspNetIdentityAndEFCore\AspNetIdentityAndEFCore.csproj", "{9F742853-05CD-47A2-B804-C8AB5BEF4D97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetIdentityAndEFCore", "src\AspNetIdentityAndEFCore\AspNetIdentityAndEFCore.csproj", "{9F742853-05CD-47A2-B804-C8AB5BEF4D97}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetIdentityAndEFCore", "AspNetIdentityAndEFCore", "{2D10136E-DB91-4F60-BF8B-7879E660CA1D}"
 EndProject
