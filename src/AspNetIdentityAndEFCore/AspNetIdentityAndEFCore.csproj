@@ -4,7 +4,7 @@
         <TargetFramework>netcoreapp2.0</TargetFramework>
         <RootNamespace>MultiTenancyServer.Samples.AspNetIdentityAndEFCore</RootNamespace>
         <AssemblyName>MultiTenancyServer.Samples.AspNetIdentityAndEFCore</AssemblyName>
-        <Version>0.6.0</Version>
+        <Version>0.9.0</Version>
         <Description>MultiTenancyServer with ASP.NET Core Identity and Entity Framework Core sample project.</Description>
         <PackageTags>multitenancy multi-tenancy multitenant multi-tenant tenants tenant company client customer division partition core common sample aspnet-identity aspnet identity ef efcore ef-core</PackageTags>
     </PropertyGroup>
@@ -13,9 +13,9 @@
         <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" PrivateAssets="All" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
-        <PackageReference Include="MultiTenancyServer" Version="0.8.5" />
-        <PackageReference Include="MultiTenancyServer.AspNetCore" Version="0.8.3" />
-        <PackageReference Include="MultiTenancyServer.EntityFrameworkCore" Version="0.8.2" />
+        <PackageReference Include="MultiTenancyServer" Version="0.9.0" />
+        <PackageReference Include="MultiTenancyServer.AspNetCore" Version="0.9.0" />
+        <PackageReference Include="MultiTenancyServer.EntityFrameworkCore" Version="0.9.0" />
         <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
         <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
         <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />

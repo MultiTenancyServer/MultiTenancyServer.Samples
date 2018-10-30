@@ -17,7 +17,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
         private readonly ITenancyContext<ApplicationTenant> _tenancyContext;
         private readonly ILogger _logger;
         // Use a property wrapper to access the scoped tenant on demand.
-        private string _tenantId => _tenancyContext?.Tenant?.Id;
+        private object _tenantId => _tenancyContext?.Tenant?.Id;
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
