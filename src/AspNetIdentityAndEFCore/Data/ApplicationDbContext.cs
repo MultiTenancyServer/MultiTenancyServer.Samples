@@ -11,7 +11,7 @@ using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models;
 
 namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, ITenantDbContext<ApplicationTenant, string>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<long>, long>, ITenantDbContext<ApplicationTenant, long>
     {
         private static object _tenancyModelState;
         private readonly ITenancyContext<ApplicationTenant> _tenancyContext;
@@ -45,11 +45,11 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
 
             // MultiTenancyServer configuration.
             var tenantStoreOptions = new TenantStoreOptions();
-            builder.ConfigureTenantContext<ApplicationTenant, string>(tenantStoreOptions);
+            builder.ConfigureTenantContext<ApplicationTenant, long>(tenantStoreOptions);
 
             // Add multi-tenancy support to model.
             var tenantReferenceOptions = new TenantReferenceOptions();
-            builder.HasTenancy<string>(tenantReferenceOptions, out _tenancyModelState);
+            builder.HasTenancy<long>(tenantReferenceOptions, out _tenancyModelState);
 
             // Configure custom properties on ApplicationTenant.
             builder.Entity<ApplicationTenant>(b =>
@@ -70,7 +70,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
             });
 
             // Configure properties on Role (ASP.NET Core Identity).
-            builder.Entity<IdentityRole>(b =>
+            builder.Entity<IdentityRole<long>>(b =>
             {
                 // Add multi-tenancy support to entity.
                 b.HasTenancy(() => _tenantId, _tenancyModelState, hasIndex: false);

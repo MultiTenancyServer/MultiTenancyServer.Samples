@@ -25,12 +25,12 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole<long>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             // Add Multi-Tenancy services.
-            services.AddMultiTenancy<ApplicationTenant, string>()
+            services.AddMultiTenancy<ApplicationTenant, long>()
                 .AddRequestParsers(parsers =>
                 {
                     // To test a domain parser locally, add a similar line 
@@ -41,7 +41,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
 
                     parsers.AddChildPathParser("/tenants/");
                 })
-                .AddEntityFrameworkStore<ApplicationDbContext, ApplicationTenant, string>();
+                .AddEntityFrameworkStore<ApplicationDbContext, ApplicationTenant, long>();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
