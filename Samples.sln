@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetIdentityAndEFCore", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetIdentityAndEFCore", "AspNetIdentityAndEFCore", "{2D10136E-DB91-4F60-BF8B-7879E660CA1D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Int64AspNetIdentityAndEFCore", "Int64AspNetIdentityAndEFCore", "{258E4036-0503-4A3F-A039-511A13EA845F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Int64AspNetIdentityAndEFCore", "src\Int64AspNetIdentityAndEFCore\Int64AspNetIdentityAndEFCore.csproj", "{2B9F2A20-8957-4162-B6D3-F59D42713706}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +21,17 @@ Global
 		{9F742853-05CD-47A2-B804-C8AB5BEF4D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F742853-05CD-47A2-B804-C8AB5BEF4D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F742853-05CD-47A2-B804-C8AB5BEF4D97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B9F2A20-8957-4162-B6D3-F59D42713706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B9F2A20-8957-4162-B6D3-F59D42713706}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B9F2A20-8957-4162-B6D3-F59D42713706}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B9F2A20-8957-4162-B6D3-F59D42713706}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9F742853-05CD-47A2-B804-C8AB5BEF4D97} = {2D10136E-DB91-4F60-BF8B-7879E660CA1D}
+		{2B9F2A20-8957-4162-B6D3-F59D42713706} = {258E4036-0503-4A3F-A039-511A13EA845F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6B0D0450-4DDB-424C-80A0-FA566EABFE74}
