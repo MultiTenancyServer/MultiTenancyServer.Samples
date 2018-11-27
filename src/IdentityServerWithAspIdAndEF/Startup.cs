@@ -1,13 +1,14 @@
 ﻿using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 using IdentityServerWithAspIdAndEF.Data;
 using IdentityServerWithAspIdAndEF.Models;
-using System.Reflection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
 namespace IdentityServerWithAspIdAndEF
@@ -25,17 +26,32 @@ namespace IdentityServerWithAspIdAndEF
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var migrationsAssembly = typeof(ApplicationDbContext).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(connectionString));
+                options.UseSqlite(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly)).EnableSensitiveDataLogging());
 
+            services.AddMultiTenancy<ApplicationTenant, string>()
+                .AddRequestParsers(parsers =>
+                {
+                    parsers
+                        .AddDomainParser();
+                        //.AddQueryParser("tenant");
+                })
+                .AddEntityFrameworkStore<ApplicationDbContext, ApplicationTenant, string>();
+
+            //IdentityModelEventSource.ShowPII = true;
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
+            services.AddAntiforgery();
 
             services.Configure<IISOptions>(iis =>
             {
@@ -52,14 +68,14 @@ namespace IdentityServerWithAspIdAndEF
                 })
                 .AddAspNetIdentity<ApplicationUser>()
                 // this adds the config data from DB (clients, resources)
-                .AddConfigurationStore(options =>
+                .AddConfigurationStore<ApplicationDbContext>(options =>
                 {
                     options.ConfigureDbContext = b =>
                         b.UseSqlite(connectionString,
                             sql => sql.MigrationsAssembly(migrationsAssembly));
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
-                .AddOperationalStore(options =>
+                .AddOperationalStore<ApplicationDbContext>(options =>
                 {
                     options.ConfigureDbContext = b =>
                         b.UseSqlite(connectionString,
@@ -87,18 +103,18 @@ namespace IdentityServerWithAspIdAndEF
                     // set the redirect URI to http://localhost:port/signin-google
                     options.ClientId = "copy client ID from Google here";
                     options.ClientSecret = "copy client secret from Google here";
-                })
-                .AddOpenIdConnect("oidc", "OpenID Connect", options =>
-                {
-                    options.Authority = "https://demo.identityserver.io/";
-                    options.ClientId = "implicit";
-                    options.SaveTokens = true;
+                //})
+                //.AddOpenIdConnect("oidc", "OpenID Connect", options =>
+                //{
+                //    options.Authority = "https://demo.identityserver.io/";
+                //    options.ClientId = "implicit";
+                //    options.SaveTokens = true;
 
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        NameClaimType = "name",
-                        RoleClaimType = "role"
-                    };
+                //    options.TokenValidationParameters = new TokenValidationParameters
+                //    {
+                //        NameClaimType = "name",
+                //        RoleClaimType = "role"
+                //    };
                 });
         }
 
@@ -114,8 +130,10 @@ namespace IdentityServerWithAspIdAndEF
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseMultiTenancy<ApplicationTenant>();
             app.UseStaticFiles();
             app.UseIdentityServer();
+            app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }
     }
