@@ -35,9 +35,12 @@ namespace IdentityServerWithAspIdAndEF
             services.AddMultiTenancy<ApplicationTenant, string>()
                 .AddRequestParsers(parsers =>
                 {
-                    parsers
-                        .AddDomainParser();
-                        //.AddQueryParser("tenant");
+                    // To test a domain parser locally, add a similar line 
+                    // to your hosts file for each tenant you want to test
+                    // For Windows: C:\Windows\System32\drivers\etc\hosts
+                    // 127.0.0.1	tenant2.local
+                    // tenant1 has been mapped to "localhost".
+                    parsers.AddDomainParser();
                 })
                 .AddEntityFrameworkStore<ApplicationDbContext, ApplicationTenant, string>();
 
@@ -130,8 +133,8 @@ namespace IdentityServerWithAspIdAndEF
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseMultiTenancy<ApplicationTenant>();
             app.UseStaticFiles();
+            app.UseMultiTenancy<ApplicationTenant>();
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
