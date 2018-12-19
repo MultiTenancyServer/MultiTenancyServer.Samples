@@ -13,7 +13,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
     {
         public static void Main(string[] args)
         {
-            Console.Title = "MultiTenancyServerWithAspNetIdentityAndEFCore";
+            Console.Title = "MultiTenancyServerWithInt64AspNetIdentityAndEFCore";
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
