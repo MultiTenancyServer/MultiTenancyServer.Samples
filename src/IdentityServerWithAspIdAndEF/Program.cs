@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using IdentityServerWithAspIdAndEF;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
@@ -20,9 +19,10 @@ namespace IdentityServerWithAspIdAndEF
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File(@"identityserver4_log.txt")
+                .WriteTo.File(@"multitenancyserver_log.txt")
                 .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Literate)
                 .CreateLogger();
 
@@ -32,7 +32,7 @@ namespace IdentityServerWithAspIdAndEF
                 args = args.Except(new[] { "/seed" }).ToArray();
             }
 
-            var host = BuildWebHost(args);
+            var host = CreateWebHostBuilder(args).Build();
 
             if (seed)
             {
@@ -43,14 +43,13 @@ namespace IdentityServerWithAspIdAndEF
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureLogging(builder =>
                 {
                     builder.ClearProviders();
                     builder.AddSerilog();
                 })
-                .UseStartup<Startup>()
-                .Build();
+                .UseStartup<Startup>();
     }
 }

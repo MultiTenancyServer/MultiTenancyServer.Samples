@@ -21,7 +21,6 @@ namespace IdentityServerWithAspIdAndEF.Data
     {
         private static object _tenancyModelState;
         private readonly ITenancyContext<ApplicationTenant> _tenancyContext;
-        private string _tenantId => _tenancyContext?.Tenant?.Id;
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
@@ -70,7 +69,7 @@ namespace IdentityServerWithAspIdAndEF.Data
             builder.Entity<ApplicationUser>(b =>
             {
                 // Add multi-tenancy support to entity.
-                b.HasTenancy(() => _tenantId, _tenancyModelState, hasIndex: false);
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, hasIndex: false);
                 // Remove unique index on NormalizedUserName.
                 b.HasIndex(u => u.NormalizedUserName).HasName("UserNameIndex").IsUnique(false);
                 // Add unique index on TenantId and NormalizedUserName.
@@ -82,7 +81,7 @@ namespace IdentityServerWithAspIdAndEF.Data
             builder.Entity<IdentityRole>(b =>
             {
                 // Add multi-tenancy support to entity.
-                b.HasTenancy(() => _tenantId, _tenancyModelState, hasIndex: false);
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, hasIndex: false);
                 // Remove unique index on NormalizedName.
                 b.HasIndex(r => r.NormalizedName).HasName("RoleNameIndex").IsUnique(false);
                 // Add unique index on TenantId and NormalizedName.
@@ -92,35 +91,35 @@ namespace IdentityServerWithAspIdAndEF.Data
 
             builder.Entity<Client>(b =>
             {
-                b.HasTenancy(() => _tenantId, _tenancyModelState, hasIndex: false);
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, hasIndex: false);
                 b.HasIndex(c => c.ClientId).IsUnique(false);
                 b.HasIndex(tenantReferenceOptions.ReferenceName, nameof(Client.ClientId)).IsUnique();
             });
 
             builder.Entity<IdentityResource>(b =>
             {
-                b.HasTenancy(() => _tenantId, _tenancyModelState, hasIndex: false);
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, hasIndex: false);
                 b.HasIndex(r => r.Name).IsUnique(false);
                 b.HasIndex(tenantReferenceOptions.ReferenceName, nameof(IdentityResource.Name)).IsUnique();
             });
 
             builder.Entity<ApiResource>(b =>
             {
-                b.HasTenancy(() => _tenantId, _tenancyModelState, hasIndex: false);
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, hasIndex: false);
                 b.HasIndex(r => r.Name).IsUnique(false);
                 b.HasIndex(tenantReferenceOptions.ReferenceName, nameof(ApiResource.Name)).IsUnique();
             });
 
             builder.Entity<ApiScope>(b =>
             {
-                b.HasTenancy(() => _tenantId, _tenancyModelState, hasIndex: false);
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, hasIndex: false);
                 b.HasIndex(s => s.Name).IsUnique(false);
                 b.HasIndex(tenantReferenceOptions.ReferenceName, nameof(ApiScope.Name)).IsUnique();
             });
 
             builder.Entity<PersistedGrant>(b =>
             {
-                b.HasTenancy(() => _tenantId, _tenancyModelState);
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState);
             });
         }
 
@@ -131,13 +130,13 @@ namespace IdentityServerWithAspIdAndEF.Data
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            this.EnsureTenancy(_tenantId, _tenancyModelState);
+            this.EnsureTenancy(_tenancyContext?.Tenant?.Id, _tenancyModelState);
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            this.EnsureTenancy(_tenantId, _tenancyModelState);
+            this.EnsureTenancy(_tenancyContext?.Tenant?.Id, _tenancyModelState);
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }

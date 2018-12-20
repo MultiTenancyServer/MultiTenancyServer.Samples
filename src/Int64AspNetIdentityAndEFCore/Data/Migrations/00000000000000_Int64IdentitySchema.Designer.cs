@@ -3,248 +3,255 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data;
 
-namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data.Migrations
+namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181030201421_UseLongIdentity")]
+    [Migration("00000000000000_Int64IdentitySchema")]
     partial class Int64IdentitySchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.3-rtm-10026");
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
-            {
-                b.Property<long>("Id")
-                    .ValueGeneratedOnAdd();
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
 
-                b.Property<string>("ConcurrencyStamp")
-                    .IsConcurrencyToken();
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
 
-                b.Property<string>("Name")
-                    .HasMaxLength(256);
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
 
-                b.Property<string>("NormalizedName")
-                    .HasMaxLength(256);
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
 
-                b.HasKey("Id");
+                    b.Property<long>("TenantId");
 
-                b.HasIndex("NormalizedName")
-                    .IsUnique()
-                    .HasName("RoleNameIndex");
+                    b.HasKey("Id");
 
-                b.ToTable("AspNetRoles");
-            });
+                    b.HasIndex("NormalizedName")
+                        .HasName("RoleNameIndex");
+
+                    b.HasIndex("TenantId", "NormalizedName")
+                        .IsUnique()
+                        .HasName("TenantRoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd();
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
-                b.Property<string>("ClaimType");
+                    b.Property<string>("ClaimType");
 
-                b.Property<string>("ClaimValue");
+                    b.Property<string>("ClaimValue");
 
-                b.Property<long>("RoleId");
+                    b.Property<long>("RoleId");
 
-                b.HasKey("Id");
+                    b.HasKey("Id");
 
-                b.HasIndex("RoleId");
+                    b.HasIndex("RoleId");
 
-                b.ToTable("AspNetRoleClaims");
-            });
+                    b.ToTable("AspNetRoleClaims");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd();
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
-                b.Property<string>("ClaimType");
+                    b.Property<string>("ClaimType");
 
-                b.Property<string>("ClaimValue");
+                    b.Property<string>("ClaimValue");
 
-                b.Property<long>("UserId");
+                    b.Property<long>("UserId");
 
-                b.HasKey("Id");
+                    b.HasKey("Id");
 
-                b.HasIndex("UserId");
+                    b.HasIndex("UserId");
 
-                b.ToTable("AspNetUserClaims");
-            });
+                    b.ToTable("AspNetUserClaims");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
-            {
-                b.Property<string>("LoginProvider");
+                {
+                    b.Property<string>("LoginProvider");
 
-                b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey");
 
-                b.Property<string>("ProviderDisplayName");
+                    b.Property<string>("ProviderDisplayName");
 
-                b.Property<long>("UserId");
+                    b.Property<long>("UserId");
 
-                b.HasKey("LoginProvider", "ProviderKey");
+                    b.HasKey("LoginProvider", "ProviderKey");
 
-                b.HasIndex("UserId");
+                    b.HasIndex("UserId");
 
-                b.ToTable("AspNetUserLogins");
-            });
+                    b.ToTable("AspNetUserLogins");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
-            {
-                b.Property<long>("UserId");
+                {
+                    b.Property<long>("UserId");
 
-                b.Property<long>("RoleId");
+                    b.Property<long>("RoleId");
 
-                b.HasKey("UserId", "RoleId");
+                    b.HasKey("UserId", "RoleId");
 
-                b.HasIndex("RoleId");
+                    b.HasIndex("RoleId");
 
-                b.ToTable("AspNetUserRoles");
-            });
+                    b.ToTable("AspNetUserRoles");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
-            {
-                b.Property<long>("UserId");
+                {
+                    b.Property<long>("UserId");
 
-                b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider");
 
-                b.Property<string>("Name");
+                    b.Property<string>("Name");
 
-                b.Property<string>("Value");
+                    b.Property<string>("Value");
 
-                b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("UserId", "LoginProvider", "Name");
 
-                b.ToTable("AspNetUserTokens");
-            });
+                    b.ToTable("AspNetUserTokens");
+                });
 
             modelBuilder.Entity("MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models.ApplicationTenant", b =>
-            {
-                b.Property<long>("Id")
-                    .ValueGeneratedOnAdd();
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
 
-                b.Property<string>("CanonicalName")
-                    .HasMaxLength(256);
+                    b.Property<string>("CanonicalName")
+                        .HasMaxLength(256);
 
-                b.Property<string>("ConcurrencyStamp")
-                    .IsConcurrencyToken();
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
 
-                b.Property<string>("DisplayName")
-                    .HasMaxLength(256);
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(256);
 
-                b.Property<string>("NormalizedCanonicalName")
-                    .HasMaxLength(256);
+                    b.Property<string>("NormalizedCanonicalName")
+                        .HasMaxLength(256);
 
-                b.HasKey("Id");
+                    b.HasKey("Id");
 
-                b.HasIndex("NormalizedCanonicalName")
-                    .IsUnique()
-                    .HasName("CanonicalNameIndex");
+                    b.HasIndex("NormalizedCanonicalName")
+                        .IsUnique()
+                        .HasName("CanonicalNameIndex");
 
-                b.ToTable("Tenants");
-            });
+                    b.ToTable("Tenants");
+                });
 
             modelBuilder.Entity("MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models.ApplicationUser", b =>
-            {
-                b.Property<long>("Id")
-                    .ValueGeneratedOnAdd();
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
 
-                b.Property<int>("AccessFailedCount");
+                    b.Property<int>("AccessFailedCount");
 
-                b.Property<string>("ConcurrencyStamp")
-                    .IsConcurrencyToken();
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
 
-                b.Property<string>("Email")
-                    .HasMaxLength(256);
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
 
-                b.Property<bool>("EmailConfirmed");
+                    b.Property<bool>("EmailConfirmed");
 
-                b.Property<bool>("LockoutEnabled");
+                    b.Property<bool>("LockoutEnabled");
 
-                b.Property<DateTimeOffset?>("LockoutEnd");
+                    b.Property<DateTimeOffset?>("LockoutEnd");
 
-                b.Property<string>("NormalizedEmail")
-                    .HasMaxLength(256);
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
 
-                b.Property<string>("NormalizedUserName")
-                    .HasMaxLength(256);
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
 
-                b.Property<string>("PasswordHash");
+                    b.Property<string>("PasswordHash");
 
-                b.Property<string>("PhoneNumber");
+                    b.Property<string>("PhoneNumber");
 
-                b.Property<bool>("PhoneNumberConfirmed");
+                    b.Property<bool>("PhoneNumberConfirmed");
 
-                b.Property<string>("SecurityStamp");
+                    b.Property<string>("SecurityStamp");
 
-                b.Property<long>("TenantId");
+                    b.Property<long>("TenantId");
 
-                b.Property<bool>("TwoFactorEnabled");
+                    b.Property<bool>("TwoFactorEnabled");
 
-                b.Property<string>("UserName")
-                    .HasMaxLength(256);
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
 
-                b.HasKey("Id");
+                    b.HasKey("Id");
 
-                b.HasIndex("NormalizedEmail")
-                    .HasName("EmailIndex");
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
 
-                b.HasIndex("NormalizedUserName")
-                    .HasName("UserNameIndex");
+                    b.HasIndex("NormalizedUserName")
+                        .HasName("UserNameIndex");
 
-                b.HasIndex("TenantId", "NormalizedUserName")
-                    .IsUnique()
-                    .HasName("TenantUserNameIndex");
+                    b.HasIndex("TenantId", "NormalizedUserName")
+                        .IsUnique()
+                        .HasName("TenantUserNameIndex");
 
-                b.ToTable("AspNetUsers");
-            });
+                    b.ToTable("AspNetUsers");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
-            {
-                b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>")
-                    .WithMany()
-                    .HasForeignKey("RoleId")
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
-            {
-                b.HasOne("MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models.ApplicationUser")
-                    .WithMany()
-                    .HasForeignKey("UserId")
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
+                {
+                    b.HasOne("MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
-            {
-                b.HasOne("MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models.ApplicationUser")
-                    .WithMany()
-                    .HasForeignKey("UserId")
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
+                {
+                    b.HasOne("MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
-            {
-                b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>")
-                    .WithMany()
-                    .HasForeignKey("RoleId")
-                    .OnDelete(DeleteBehavior.Cascade);
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                b.HasOne("MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models.ApplicationUser")
-                    .WithMany()
-                    .HasForeignKey("UserId")
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
+                    b.HasOne("MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
-            {
-                b.HasOne("MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models.ApplicationUser")
-                    .WithMany()
-                    .HasForeignKey("UserId")
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
+                {
+                    b.HasOne("MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 #pragma warning restore 612, 618
         }
     }

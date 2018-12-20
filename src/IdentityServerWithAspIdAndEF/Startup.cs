@@ -29,8 +29,10 @@ namespace IdentityServerWithAspIdAndEF
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             var migrationsAssembly = typeof(ApplicationDbContext).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly)).EnableSensitiveDataLogging());
+            services.AddDbContext<ApplicationDbContext>(options => options
+                .UseSqlite(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly))
+                //.EnableSensitiveDataLogging()
+                );
 
             services.AddMultiTenancy<ApplicationTenant, string>()
                 .AddRequestParsers(parsers =>
@@ -50,17 +52,18 @@ namespace IdentityServerWithAspIdAndEF
                 .AddDefaultTokenProviders();
 
             services.AddMvc(options =>
-            {
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-            });
+                {
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddAntiforgery();
 
             services.Configure<IISOptions>(iis =>
-            {
-                iis.AuthenticationDisplayName = "Windows";
-                iis.AutomaticAuthentication = false;
-            });
+                {
+                    iis.AuthenticationDisplayName = "Windows";
+                    iis.AutomaticAuthentication = false;
+                });
 
             var builder = services.AddIdentityServer(options =>
                 {
@@ -130,13 +133,20 @@ namespace IdentityServerWithAspIdAndEF
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
             app.UseMultiTenancy<ApplicationTenant>();
+
             app.UseIdentityServer();
+
             app.UseAuthentication();
+
             app.UseMvcWithDefaultRoute();
         }
     }

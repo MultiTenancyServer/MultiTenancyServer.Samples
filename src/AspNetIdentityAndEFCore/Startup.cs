@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,8 +23,10 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options
+                .UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
+                //.EnableSensitiveDataLogging()
+                );
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -37,6 +40,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
                     // to your hosts file for each tenant you want to test
                     // For Windows: C:\Windows\System32\drivers\etc\hosts
                     // 127.0.0.1	tenant1.tenants.local
+                    // 127.0.0.1	tenant2.tenants.local
                     //parsers.AddSubdomainParser(".tenants.local");
 
                     parsers.AddChildPathParser("/tenants/");
@@ -46,7 +50,8 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,14 +59,16 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
         {
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
+
+            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 

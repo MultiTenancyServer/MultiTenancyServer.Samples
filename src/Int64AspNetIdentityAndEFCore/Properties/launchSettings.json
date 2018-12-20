@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Int64AspNetIdentityAndEFCore": {
+    "AspNetIdentityAndEFCore": {
       "commandName": "Project",
       "commandLineArgs": "/seed",
       "launchBrowser": true,

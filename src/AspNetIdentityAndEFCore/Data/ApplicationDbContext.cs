@@ -16,8 +16,6 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
         private static object _tenancyModelState;
         private readonly ITenancyContext<ApplicationTenant> _tenancyContext;
         private readonly ILogger _logger;
-        // Use a property wrapper to access the scoped tenant on demand.
-        private object _tenantId => _tenancyContext?.Tenant?.Id;
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
@@ -61,7 +59,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
             builder.Entity<ApplicationUser>(b =>
             {
                 // Add multi-tenancy support to entity.
-                b.HasTenancy(() => _tenantId, _tenancyModelState, hasIndex: false);
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, hasIndex: false);
                 // Remove unique index on NormalizedUserName.
                 b.HasIndex(u => u.NormalizedUserName).HasName("UserNameIndex").IsUnique(false);
                 // Add unique index on TenantId and NormalizedUserName.
@@ -73,7 +71,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
             builder.Entity<IdentityRole>(b =>
             {
                 // Add multi-tenancy support to entity.
-                b.HasTenancy(() => _tenantId, _tenancyModelState, hasIndex: false);
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, hasIndex: false);
                 // Remove unique index on NormalizedUserName.
                 b.HasIndex(r => r.NormalizedName).HasName("RoleNameIndex").IsUnique(false);
                 // Add unique index on TenantId and NormalizedUserName.
@@ -85,14 +83,14 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             // Ensure multi-tenancy for all tenantable entities.
-            this.EnsureTenancy(_tenantId, _tenancyModelState, _logger);
+            this.EnsureTenancy(_tenancyContext?.Tenant?.Id, _tenancyModelState, _logger);
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             // Ensure multi-tenancy for all tenantable entities.
-            this.EnsureTenancy(_tenantId, _tenancyModelState, _logger);
+            this.EnsureTenancy(_tenancyContext?.Tenant?.Id, _tenancyModelState, _logger);
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }

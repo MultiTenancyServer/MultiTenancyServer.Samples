@@ -13,12 +13,13 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
     {
         public static void Main(string[] args)
         {
-            Console.Title = "MultiTenancyServerWithInt64AspNetIdentityAndEFCore";
+            Console.Title = "MultiTenancyServerWithAspNetIdentityAndEFCore";
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.File(@"multitenancyserver_log.txt")
@@ -31,7 +32,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
                 args = args.Except(new[] { "/seed" }).ToArray();
             }
 
-            var host = BuildWebHost(args);
+            var host = CreateWebHostBuilder(args).Build();
 
             if (seed)
             {
@@ -41,14 +42,13 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureLogging(builder =>
                 {
                     builder.ClearProviders();
                     builder.AddSerilog();
                 })
-                .UseStartup<Startup>()
-                .Build();
+                .UseStartup<Startup>();
     }
 }
