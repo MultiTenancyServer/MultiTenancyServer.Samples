@@ -38,6 +38,8 @@ namespace IdentityServerWithAspIdAndEF.Data
 
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
 
+        public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
+
         public DbSet<ApplicationTenant> Tenants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -119,7 +121,14 @@ namespace IdentityServerWithAspIdAndEF.Data
 
             builder.Entity<PersistedGrant>(b =>
             {
-                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState);
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, indexNameFormat: $"IX_{nameof(PersistedGrant)}_{{0}}");
+            });
+
+            builder.Entity<DeviceFlowCodes>(b =>
+            {
+                b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, hasIndex: false);
+                b.HasIndex(c => c.DeviceCode).IsUnique(false);
+                b.HasIndex(tenantReferenceOptions.ReferenceName, nameof(IdentityServer4.EntityFramework.Entities.DeviceFlowCodes.DeviceCode)).IsUnique();
             });
         }
 
