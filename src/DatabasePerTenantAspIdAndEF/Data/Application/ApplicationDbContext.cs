@@ -4,6 +4,9 @@ using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models;
 
 namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
 {
+    /// <summary>
+    /// Application database per tenant.
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         private readonly IApplicationDbContextConfigurator _configurator;

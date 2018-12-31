@@ -23,11 +23,14 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Central database to manage tenants.
+            // You could use the InMemoryTenantStore instead or your own custom store (such as from configuration).
             services.AddDbContext<ManagementDbContext>(options => options
                 .UseSqlite(Configuration.GetConnectionString("ManagementConnection"))
                 //.EnableSensitiveDataLogging()
                 );
 
+            // Application database per tenant.
             services.AddDbContext<ApplicationDbContext>(options => options
                 .UseSqlite(Configuration.GetConnectionString("ApplicationConnection"))
                 //.EnableSensitiveDataLogging()

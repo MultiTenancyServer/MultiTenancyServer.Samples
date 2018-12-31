@@ -4,6 +4,9 @@ using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models;
 
 namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
 {
+    /// <summary>
+    /// Central database to manage tenants.
+    /// </summary>
     public class ManagementDbContext : DbContext, ITenantDbContext<ApplicationTenant, string>
     {
         public ManagementDbContext(

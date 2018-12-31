@@ -30,7 +30,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
             if (options == null)
             {
                 //return; // uncomment when generating migrations
-                throw new InvalidOperationException("Database options not found.");
+                throw new InvalidOperationException("SQLite databse options not found. If using a different database server then you must find its options instead in the code above.");
             }
 
             var connectionString = options.ConnectionString.Replace("{{DATABASE_NAME}}", tenant.DatabaseName);
