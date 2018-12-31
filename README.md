@@ -10,7 +10,7 @@ Sample project: [AspNetIdentityAndEFCore](https://github.com/MultiTenancyServer/
 Components: ASP.NET Core Identity and Entity Framework Core<br/>
 Database model: single database with tenancy shadow columns<br/>
 
-## Int64 ASP.NET Core Identity and Entity Framework Core
+## ASP.NET Core Identity and Entity Framework Core using Int64
 Sample project: [Int64AspNetIdentityAndEFCore](https://github.com/MultiTenancyServer/MultiTenancyServer.Samples/tree/master/src/Int64AspNetIdentityAndEFCore)<br />
 Components: ASP.NET Core Identity and Entity Framework Core<br/>
 Database model: single database with tenancy shadow columns<br/>
