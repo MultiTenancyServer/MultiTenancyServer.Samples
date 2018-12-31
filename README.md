@@ -17,11 +17,11 @@ Components: ASP.NET Core Identity and Entity Framework Core
 Database model: single database with tenancy shadow columns<br/>
 Components: ASP.NET Core Identity and Entity Framework Core
 
-## IdentityServer4
+## Identity Server 4
 [Sample project: IdentityServerWithAspIdAndEF](https://github.com/MultiTenancyServer/MultiTenancyServer.Samples/tree/master/src/IdentityServerWithAspIdAndEF)
 
 Database model: single database with tenancy shadow columns<br/>
-Components: IdentityServer4, ASP.NET Core Identity and Entity Framework Core
+Components: Identity Server 4, ASP.NET Core Identity and Entity Framework Core
 
 ## Database per tenant
 [Sample project: DatabasePerTenantAspIdAndEF](https://github.com/MultiTenancyServer/MultiTenancyServer.Samples/tree/master/src/DatabasePerTenantAspIdAndEF)
