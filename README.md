@@ -3,7 +3,13 @@
 
 See [MultiTenancyServer README](https://github.com/MultiTenancyServer/MultiTenancyServer).
 
-All examples will register two tenants (tenant1 and tenant2) along with three users with one user registered in both tenants: alice in tenant1 and tenant2, bob only in tenant1, and chris only in tenant2. You should launch the project (as an exe) when debugging instead of IIS Express so the /seed command line argument is passed in which will generate the Sqlite database(s) in the project folder and populate with the above mentioned tenants and users. All user passwords are Pass123$.
+All examples will register two tenants (tenant1 and tenant2) along with three users with one user, alice, registered within both tenants. You should launch a sample project as an exe when debugging instead of via IIS Express so the /seed command line argument is passed in which will generate the Sqlite database(s) in the project folder and populate with the above mentioned tenants and users. All user passwords are Pass123$.
+
+|User|Tenant|Password|
+|---|---|---|
+|alice@contoso.com|tenant1 & tenant2|Pass123$|
+|bob@contoso.com|tenant1|Pass123$|
+|chris@contoso.com|tenant2|Pass123$|
 
 ## ASP.NET Core Identity
 Sample project: [AspNetIdentityAndEFCore](https://github.com/MultiTenancyServer/MultiTenancyServer.Samples/tree/master/src/AspNetIdentityAndEFCore)<br />
