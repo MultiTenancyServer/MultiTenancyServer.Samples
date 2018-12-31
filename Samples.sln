@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServerWithAspIdAndE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerWithAspIdAndEF", "src\IdentityServerWithAspIdAndEF\IdentityServerWithAspIdAndEF.csproj", "{B121E062-A390-46BC-8ABA-8049931273DB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabasePerTenantAspIdAndEF", "DatabasePerTenantAspIdAndEF", "{22F368CC-4A48-4BA5-9EA6-5BB34A35CB85}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabasePerTenantAspIdAndEF", "src\DatabasePerTenantAspIdAndEF\DatabasePerTenantAspIdAndEF.csproj", "{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,10 @@ Global
 		{B121E062-A390-46BC-8ABA-8049931273DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B121E062-A390-46BC-8ABA-8049931273DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B121E062-A390-46BC-8ABA-8049931273DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +49,7 @@ Global
 		{9F742853-05CD-47A2-B804-C8AB5BEF4D97} = {2D10136E-DB91-4F60-BF8B-7879E660CA1D}
 		{2B9F2A20-8957-4162-B6D3-F59D42713706} = {258E4036-0503-4A3F-A039-511A13EA845F}
 		{B121E062-A390-46BC-8ABA-8049931273DB} = {3E38E9FE-3D19-4D4F-8E9A-1F0B3BBB0001}
+		{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A} = {22F368CC-4A48-4BA5-9EA6-5BB34A35CB85}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6B0D0450-4DDB-424C-80A0-FA566EABFE74}
