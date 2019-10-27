@@ -9,16 +9,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Hosting;
 
 namespace IdentityServerWithAspIdAndEF
 {
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment Environment { get; }
+        public IHostEnvironment Environment { get; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration, IHostEnvironment environment)
         {
             Configuration = configuration;
             Environment = environment;
@@ -35,15 +35,12 @@ namespace IdentityServerWithAspIdAndEF
                 );
 
             services.AddMultiTenancy<ApplicationTenant, string>()
-                .AddRequestParsers(parsers =>
-                {
-                    // To test a domain parser locally, add a similar line 
-                    // to your hosts file for each tenant you want to test
-                    // For Windows: C:\Windows\System32\drivers\etc\hosts
-                    // 127.0.0.1	tenant2.local
-                    // tenant1 has been mapped to "localhost".
-                    parsers.AddDomainParser();
-                })
+                // To test a domain parser locally, add a similar line 
+                // to your hosts file for each tenant you want to test
+                // For Windows: C:\Windows\System32\drivers\etc\hosts
+                // 127.0.0.1	tenant2.local
+                // tenant1 has been mapped to "localhost".
+                .AddDomainParser()
                 .AddEntityFrameworkStore<ApplicationDbContext, ApplicationTenant, string>();
 
             //IdentityModelEventSource.ShowPII = true;
@@ -55,7 +52,7 @@ namespace IdentityServerWithAspIdAndEF
                 {
                     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             services.AddAntiforgery();
 
@@ -109,22 +106,22 @@ namespace IdentityServerWithAspIdAndEF
                     // set the redirect URI to http://localhost:port/signin-google
                     options.ClientId = "copy client ID from Google here";
                     options.ClientSecret = "copy client secret from Google here";
-                //})
-                //.AddOpenIdConnect("oidc", "OpenID Connect", options =>
-                //{
-                //    options.Authority = "https://demo.identityserver.io/";
-                //    options.ClientId = "implicit";
-                //    options.SaveTokens = true;
+                    //})
+                    //.AddOpenIdConnect("oidc", "OpenID Connect", options =>
+                    //{
+                    //    options.Authority = "https://demo.identityserver.io/";
+                    //    options.ClientId = "implicit";
+                    //    options.SaveTokens = true;
 
-                //    options.TokenValidationParameters = new TokenValidationParameters
-                //    {
-                //        NameClaimType = "name",
-                //        RoleClaimType = "role"
-                //    };
+                    //    options.TokenValidationParameters = new TokenValidationParameters
+                    //    {
+                    //        NameClaimType = "name",
+                    //        RoleClaimType = "role"
+                    //    };
                 });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -141,13 +138,21 @@ namespace IdentityServerWithAspIdAndEF
 
             app.UseStaticFiles();
 
+            app.UseRouting();
+
             app.UseMultiTenancy<ApplicationTenant>();
 
             app.UseIdentityServer();
 
             app.UseAuthentication();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    // if using a PathParser, you will need to adjust this to accomodate the tenant paths
+                    pattern: "tenants/{_tenant_placeholder_}/{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

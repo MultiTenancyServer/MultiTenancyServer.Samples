@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetIdentityAndEFCore", "src\AspNetIdentityAndEFCore\AspNetIdentityAndEFCore.csproj", "{9F742853-05CD-47A2-B804-C8AB5BEF4D97}"
 EndProject
@@ -18,6 +18,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabasePerTenantAspIdAndEF", "DatabasePerTenantAspIdAndEF", "{22F368CC-4A48-4BA5-9EA6-5BB34A35CB85}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabasePerTenantAspIdAndEF", "src\DatabasePerTenantAspIdAndEF\DatabasePerTenantAspIdAndEF.csproj", "{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4598A16C-EB72-4B22-A425-800AEB9263F8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		Directory.Build.props = Directory.Build.props
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

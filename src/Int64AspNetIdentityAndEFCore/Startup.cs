@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data;
 using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models;
 using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Services;
@@ -34,28 +35,24 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
 
             // Add Multi-Tenancy services.
             services.AddMultiTenancy<ApplicationTenant, long>()
-                .AddRequestParsers(parsers =>
-                {
-                    // To test a domain parser locally, add a similar line 
-                    // to your hosts file for each tenant you want to test
-                    // For Windows: C:\Windows\System32\drivers\etc\hosts
-                    // 127.0.0.1	tenant1.tenants.local
-                    // 127.0.0.1	tenant2.tenants.local
-                    //parsers.AddSubdomainParser(".tenants.local");
-
-                    parsers.AddChildPathParser("/tenants/");
-                })
+                // To test a domain parser locally, add a similar line 
+                // to your hosts file for each tenant you want to test
+                // For Windows: C:\Windows\System32\drivers\etc\hosts
+                // 127.0.0.1	tenant1.tenants.local
+                // 127.0.0.1	tenant2.tenants.local
+                //.AddSubdomainParser(".tenants.local");
+                .AddChildPathParser("/tenants/")
                 .AddEntityFrameworkStore<ApplicationDbContext, ApplicationTenant, long>();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Latest);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -72,16 +69,18 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
 
             app.UseStaticFiles();
 
+            app.UseRouting();
+
             app.UseMultiTenancy<ApplicationTenant>();
 
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
                     // if using a PathParser, you will need to adjust this to accomodate the tenant paths
-                    template: "tenants/{_tenant_placeholder_}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "tenants/{_tenant_placeholder_}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
