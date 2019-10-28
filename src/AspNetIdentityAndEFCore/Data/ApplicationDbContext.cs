@@ -60,6 +60,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data
             {
                 // Add multi-tenancy support to entity.
                 b.HasTenancy(() => _tenancyContext.Tenant.Id, _tenancyModelState, hasIndex: false);
+                b.HasQueryFilter(e => EF.Property<string>(e, "TenantId") == _tenancyContext.Tenant.Id);
                 // Remove unique index on NormalizedUserName.
                 b.HasIndex(u => u.NormalizedUserName).HasName("UserNameIndex").IsUnique(false);
                 // Add unique index on TenantId and NormalizedUserName.

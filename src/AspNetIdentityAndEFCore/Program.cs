@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -32,7 +31,7 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
                 args = args.Except(new[] { "/seed" }).ToArray();
             }
 
-            var host = CreateWebHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build();
 
             if (seed)
             {
@@ -42,13 +41,11 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
             host.Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .ConfigureLogging(builder =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    builder.ClearProviders();
-                    builder.AddSerilog();
-                })
-                .UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }

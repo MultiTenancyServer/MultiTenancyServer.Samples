@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data;
 using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Models;
-using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Services;
 
 namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
 {
@@ -24,15 +22,12 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options
-                .UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
-                //.EnableSensitiveDataLogging()
-                );
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
+            services.AddDbContext<ApplicationDbContext>(options =>
+                //options.UseSqlServer(
+                options.UseSqlite(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             // Add Multi-Tenancy services.
             services.AddMultiTenancy<ApplicationTenant, string>()
                 // To test a domain parser locally, add a similar line 
@@ -40,19 +35,14 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
                 // For Windows: C:\Windows\System32\drivers\etc\hosts
                 // 127.0.0.1	tenant1.tenants.local
                 // 127.0.0.1	tenant2.tenants.local
-                //parsers.AddSubdomainParser(".tenants.local");
-                .AddChildPathParser("/tenants/")
+                .AddSubdomainParser(".tenants.local")
                 .AddEntityFrameworkStore<ApplicationDbContext, ApplicationTenant, string>();
-
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
-
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Latest);
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -61,12 +51,11 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -74,13 +63,14 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
             app.UseMultiTenancy<ApplicationTenant>();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    // if using a PathParser, you will need to adjust this to accomodate the tenant paths
-                    pattern: "tenants/{_tenant_placeholder_}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

@@ -1,29 +1,13 @@
-{
-  "profiles": {
-    "AspNetIdentityAndEFCore": {
-      "commandName": "Project",
-      "commandLineArgs": "/seed",
-      "launchBrowser": true,
-      "launchUrl": "tenants/tenant1/Account/Login",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "https://localhost:5000",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+﻿{
+    "profiles": {
+        "AspNetIdentityAndEFCore": {
+            "commandName": "Project",
+            "commandLineArgs": "/seed",
+            "launchBrowser": true,
+            "applicationUrl": "https://localhost:5000",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        }
     }
-  },
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "https://localhost:5000",
-      "sslPort": 0
-    }
-  }
 }

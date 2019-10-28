@@ -3,22 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetIdentityAndEFCore", "src\AspNetIdentityAndEFCore\AspNetIdentityAndEFCore.csproj", "{9F742853-05CD-47A2-B804-C8AB5BEF4D97}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetIdentityAndEFCore", "AspNetIdentityAndEFCore", "{2D10136E-DB91-4F60-BF8B-7879E660CA1D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Int64AspNetIdentityAndEFCore", "Int64AspNetIdentityAndEFCore", "{258E4036-0503-4A3F-A039-511A13EA845F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Int64AspNetIdentityAndEFCore", "src\Int64AspNetIdentityAndEFCore\Int64AspNetIdentityAndEFCore.csproj", "{2B9F2A20-8957-4162-B6D3-F59D42713706}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServerWithAspIdAndEF", "IdentityServerWithAspIdAndEF", "{3E38E9FE-3D19-4D4F-8E9A-1F0B3BBB0001}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerWithAspIdAndEF", "src\IdentityServerWithAspIdAndEF\IdentityServerWithAspIdAndEF.csproj", "{B121E062-A390-46BC-8ABA-8049931273DB}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabasePerTenantAspIdAndEF", "DatabasePerTenantAspIdAndEF", "{22F368CC-4A48-4BA5-9EA6-5BB34A35CB85}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabasePerTenantAspIdAndEF", "src\DatabasePerTenantAspIdAndEF\DatabasePerTenantAspIdAndEF.csproj", "{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4598A16C-EB72-4B22-A425-800AEB9263F8}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -29,37 +13,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetIdentityAndEFCore", "src\AspNetIdentityAndEFCore\AspNetIdentityAndEFCore.csproj", "{C153D7A8-C69C-4C7D-BED4-08379E08A8F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9F742853-05CD-47A2-B804-C8AB5BEF4D97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F742853-05CD-47A2-B804-C8AB5BEF4D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F742853-05CD-47A2-B804-C8AB5BEF4D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F742853-05CD-47A2-B804-C8AB5BEF4D97}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B9F2A20-8957-4162-B6D3-F59D42713706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B9F2A20-8957-4162-B6D3-F59D42713706}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B9F2A20-8957-4162-B6D3-F59D42713706}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B9F2A20-8957-4162-B6D3-F59D42713706}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B121E062-A390-46BC-8ABA-8049931273DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B121E062-A390-46BC-8ABA-8049931273DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B121E062-A390-46BC-8ABA-8049931273DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B121E062-A390-46BC-8ABA-8049931273DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C153D7A8-C69C-4C7D-BED4-08379E08A8F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C153D7A8-C69C-4C7D-BED4-08379E08A8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C153D7A8-C69C-4C7D-BED4-08379E08A8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C153D7A8-C69C-4C7D-BED4-08379E08A8F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{9F742853-05CD-47A2-B804-C8AB5BEF4D97} = {2D10136E-DB91-4F60-BF8B-7879E660CA1D}
-		{2B9F2A20-8957-4162-B6D3-F59D42713706} = {258E4036-0503-4A3F-A039-511A13EA845F}
-		{B121E062-A390-46BC-8ABA-8049931273DB} = {3E38E9FE-3D19-4D4F-8E9A-1F0B3BBB0001}
-		{66CFB1CB-A4BE-4D13-AB9E-44A8024EAD9A} = {22F368CC-4A48-4BA5-9EA6-5BB34A35CB85}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6B0D0450-4DDB-424C-80A0-FA566EABFE74}
