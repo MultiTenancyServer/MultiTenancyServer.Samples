@@ -79,7 +79,8 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
                     alice = new ApplicationUser
                     {
                         UserName = "alice@contoso.com",
-                        Email = "alice@contoso.com"
+                        Email = "alice@contoso.com",
+                        EmailConfirmed = true
                     };
                     var result = userMgr.CreateAsync(alice, "Pass123$").Result;
                     if (!result.Succeeded)
@@ -100,7 +101,8 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
                     bob = new ApplicationUser
                     {
                         UserName = "bob@contoso.com",
-                        Email = "bob@contoso.com"
+                        Email = "bob@contoso.com",
+                        EmailConfirmed = true
                     };
                     var result = userMgr.CreateAsync(bob, "Pass123$").Result;
                     if (!result.Succeeded)
@@ -132,7 +134,8 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
                     alice = new ApplicationUser
                     {
                         UserName = "alice@contoso.com",
-                        Email = "alice@contoso.com"
+                        Email = "alice@contoso.com",
+                        EmailConfirmed = true
                     };
                     var result = userMgr.CreateAsync(alice, "Pass123$").Result;
                     if (!result.Succeeded)
@@ -153,7 +156,8 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
                     chris = new ApplicationUser
                     {
                         UserName = "chris@contoso.com",
-                        Email = "chris@contoso.com"
+                        Email = "chris@contoso.com",
+                        EmailConfirmed = true
                     };
                     var result = userMgr.CreateAsync(chris, "Pass123$").Result;
                     if (!result.Succeeded)

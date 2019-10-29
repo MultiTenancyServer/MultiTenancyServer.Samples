@@ -13,11 +13,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
-    <PackageReference Include="MultiTenancyServer.AspNetCore" Version="2.0.0-alpha1" />
-    <PackageReference Include="MultiTenancyServer.EntityFrameworkCore" Version="2.0.0-alpha1" />
+    <PackageReference Include="MultiTenancyServer.AspNetCore" Version="2.0.0-beta1" />
+    <PackageReference Include="MultiTenancyServer.EntityFrameworkCore" Version="2.0.0-beta1" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
   </ItemGroup>
 
 </Project>

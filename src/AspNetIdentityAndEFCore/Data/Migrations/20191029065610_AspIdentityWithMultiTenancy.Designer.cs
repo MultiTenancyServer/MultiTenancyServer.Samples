@@ -10,7 +10,7 @@ using MultiTenancyServer.Samples.AspNetIdentityAndEFCore.Data;
 namespace AspNetIdentityAndEFCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191028013142_AspIdentityWithMultiTenancy")]
+    [Migration("20191029065610_AspIdentityWithMultiTenancy")]
     partial class AspIdentityWithMultiTenancy
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

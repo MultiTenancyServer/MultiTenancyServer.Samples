@@ -4,7 +4,7 @@
             "commandName": "Project",
             "commandLineArgs": "/seed",
             "launchBrowser": true,
-            "applicationUrl": "https://localhost:5000",
+            "applicationUrl": "https://tenant1.tenants.local:5000",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }

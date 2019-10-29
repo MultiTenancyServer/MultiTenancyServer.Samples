@@ -23,9 +23,10 @@ namespace MultiTenancyServer.Samples.AspNetIdentityAndEFCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                //options.UseSqlServer(
-                options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options
+                    //.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                    .UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
+                    .EnableSensitiveDataLogging());
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             // Add Multi-Tenancy services.
