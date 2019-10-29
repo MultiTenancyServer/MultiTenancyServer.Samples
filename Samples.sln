@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetIdentityAndEFCore", "src\AspNetIdentityAndEFCore\AspNetIdentityAndEFCore.csproj", "{C153D7A8-C69C-4C7D-BED4-08379E08A8F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetIdentityAndEFCore", "src\AspNetIdentityAndEFCore\AspNetIdentityAndEFCore.csproj", "{C153D7A8-C69C-4C7D-BED4-08379E08A8F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Int64AspNetIdentityAndEFCore", "src\Int64AspNetIdentityAndEFCore\Int64AspNetIdentityAndEFCore.csproj", "{440CAE78-91DA-46A0-89F5-779B5919ED62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{C153D7A8-C69C-4C7D-BED4-08379E08A8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C153D7A8-C69C-4C7D-BED4-08379E08A8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C153D7A8-C69C-4C7D-BED4-08379E08A8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{440CAE78-91DA-46A0-89F5-779B5919ED62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{440CAE78-91DA-46A0-89F5-779B5919ED62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{440CAE78-91DA-46A0-89F5-779B5919ED62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{440CAE78-91DA-46A0-89F5-779B5919ED62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
